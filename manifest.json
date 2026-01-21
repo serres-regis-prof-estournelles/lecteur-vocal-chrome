@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Lecteur Vocal",
+  "version": "1.0",
+  "description": "Lit le texte sélectionné à voix haute - Compatible PDF",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "lire-texte": {
+      "suggested_key": {
+        "default": "Alt+X",
+        "mac": "Alt+X"
+      },
+      "description": "Lire/arrêter la lecture du texte sélectionné"
+    }
+  }
+}
