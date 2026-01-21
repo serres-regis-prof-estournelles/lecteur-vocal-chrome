@@ -1,0 +1,340 @@
+// Paramètres de lecture
+let parametres = {
+  vitesse: 1.5,
+  voixFeminine: true
+};
+
+// État de la lecture
+let enCoursDeLecture = false;
+let panneauCree = false;
+
+// Charge les paramètres sauvegardés
+const paramsSauvegardes = localStorage.getItem('lecteurTexteParams');
+if (paramsSauvegardes) {
+  parametres = JSON.parse(paramsSauvegardes);
+}
+
+// Détection PDF
+function estDocumentPDF() {
+  return document.contentType === 'application/pdf' || 
+         window.location.pathname.toLowerCase().endsWith('.pdf') ||
+         window.location.href.toLowerCase().includes('.pdf');
+}
+
+// Initialisation
+function initExtension() {
+  if (!document.body) {
+    setTimeout(initExtension, 100);
+    return;
+  }
+  
+  if (!panneauCree) {
+    creerPanneauControle();
+    panneauCree = true;
+  }
+  
+  ajouterEcouteurs();
+}
+
+// Écouteurs globaux
+function ajouterEcouteurs() {
+  document.addEventListener('keydown', function(e) {
+    if (e.altKey && (e.key === 'x' || e.key === 'X')) {
+      e.preventDefault();
+      
+      let texteSelectionne = '';
+      
+      try {
+        texteSelectionne = window.getSelection().toString().trim();
+        
+        // Pour les PDF dans Chrome
+        if (!texteSelectionne && document.querySelector('.textLayer')) {
+          const selection = window.getSelection();
+          if (selection.rangeCount > 0) {
+            texteSelectionne = selection.toString().trim();
+          }
+        }
+      } catch (error) {
+        console.log('Erreur:', error);
+      }
+      
+      if (texteSelectionne && texteSelectionne.length > 0) {
+        if (enCoursDeLecture) {
+          window.speechSynthesis.cancel();
+          enCoursDeLecture = false;
+          afficherNotification('⏹️ Lecture arrêtée', '#f44336');
+        } else {
+          lireTexte(texteSelectionne);
+        }
+      } else {
+        afficherNotification('🔍 Sélectionnez du texte d\'abord', '#FF9800');
+      }
+    }
+  }, true);
+}
+
+// Lire le texte
+function lireTexte(texte) {
+  texte = nettoyerTexte(texte);
+  
+  if (!texte || texte.length === 0) return;
+  
+  window.speechSynthesis.cancel();
+  
+  const utterance = new SpeechSynthesisUtterance(texte);
+  utterance.lang = 'fr-FR';
+  utterance.rate = parametres.vitesse;
+  utterance.volume = 1.0;
+  
+  // Configurer la voix
+  let voices = window.speechSynthesis.getVoices();
+  
+  if (voices.length === 0) {
+    window.speechSynthesis.onvoiceschanged = function() {
+      voices = window.speechSynthesis.getVoices();
+      configurerVoix(utterance, voices);
+      demarrerLecture(utterance);
+    };
+  } else {
+    configurerVoix(utterance, voices);
+    demarrerLecture(utterance);
+  }
+}
+
+function configurerVoix(utterance, voices) {
+  let voixFrancaise = voices.find(v => v.lang.startsWith('fr') && v.name.toLowerCase().includes('female'));
+  
+  if (!voixFrancaise) {
+    voixFrancaise = voices.find(v => v.lang.startsWith('fr'));
+  }
+  
+  if (voixFrancaise) {
+    utterance.voice = voixFrancaise;
+  }
+}
+
+function demarrerLecture(utterance) {
+  utterance.onstart = function() {
+    enCoursDeLecture = true;
+    afficherNotification('🔊 Lecture en cours...', '#4CAF50');
+  };
+  
+  utterance.onend = function() {
+    enCoursDeLecture = false;
+  };
+  
+  utterance.onerror = function() {
+    enCoursDeLecture = false;
+    afficherNotification('❌ Erreur de lecture', '#f44336');
+  };
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+// Nettoyer le texte
+function nettoyerTexte(texte) {
+  return texte
+    .replace(/\s+/g, ' ')
+    .replace(/(\r\n|\n|\r)/g, ' ')
+    .replace(/\s+\./g, '.')
+    .replace(/\s+,/g, ',')
+    .trim();
+}
+
+// Notification
+function afficherNotification(message, couleur) {
+  const ancienneNotif = document.querySelector('.lecteur-notification');
+  if (ancienneNotif) {
+    ancienneNotif.remove();
+  }
+  
+  const notification = document.createElement('div');
+  notification.textContent = message;
+  notification.className = 'lecteur-notification';
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: ${couleur};
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 100000;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    animation: fadeInOut 2s ease-in-out;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.remove();
+    }
+  }, 2000);
+}
+
+// Créer le panneau de contrôle
+function creerPanneauControle() {
+  const panneau = document.createElement('div');
+  panneau.id = 'lecteur-texte-panneau';
+  panneau.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    z-index: 100000;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    min-width: 280px;
+    display: none;
+  `;
+  
+  panneau.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <h3 style="margin: 0; font-size: 16px;">🎙️ Lecteur vocal</h3>
+      <button id="fermer-panneau" style="background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 24px; height: 24px; font-size: 16px;">×</button>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 8px; font-size: 13px;">Vitesse: <span id="vitesse-valeur">${parametres.vitesse.toFixed(1)}x</span></label>
+      <input type="range" id="vitesse-slider" min="0.5" max="2" step="0.1" value="${parametres.vitesse}" 
+        style="width: 100%; cursor: pointer;">
+      <div style="display: flex; justify-content: space-between; font-size: 11px; margin-top: 4px; opacity: 0.8;">
+        <span>Lent</span>
+        <span>Normal</span>
+        <span>Rapide</span>
+      </div>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <button id="test-lecture" style="
+        width: 100%;
+        padding: 10px;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 6px;
+        color: #667eea;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+      ">🔊 Tester la voix</button>
+    </div>
+    
+    <div style="margin-bottom: 10px;">
+      <button id="arreter-lecture" style="
+        width: 100%;
+        padding: 10px;
+        background: rgba(255,255,255,0.2);
+        border: none;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+      ">⏹️ Arrêter</button>
+    </div>
+    
+    <div style="font-size: 11px; opacity: 0.8; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.2);">
+      💡 Sélectionnez du texte puis Alt+X
+      <br>📄 Compatible avec les PDF
+    </div>
+  `;
+  
+  document.body.appendChild(panneau);
+  
+  const boutonToggle = document.createElement('button');
+  boutonToggle.innerHTML = '🎙️';
+  boutonToggle.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 100001;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  `;
+  
+  boutonToggle.addEventListener('mouseenter', () => {
+    boutonToggle.style.transform = 'scale(1.1)';
+  });
+  
+  boutonToggle.addEventListener('mouseleave', () => {
+    boutonToggle.style.transform = 'scale(1)';
+  });
+  
+  boutonToggle.addEventListener('click', () => {
+    panneau.style.display = 'block';
+    boutonToggle.style.display = 'none';
+  });
+  
+  document.body.appendChild(boutonToggle);
+  
+  // Fermer le panneau
+  document.getElementById('fermer-panneau').addEventListener('click', () => {
+    panneau.style.display = 'none';
+    boutonToggle.style.display = 'block';
+  });
+  
+  // Gestion vitesse
+  const vitesseSlider = document.getElementById('vitesse-slider');
+  const vitesseValeur = document.getElementById('vitesse-valeur');
+  
+  vitesseSlider.addEventListener('input', (e) => {
+    parametres.vitesse = parseFloat(e.target.value);
+    vitesseValeur.textContent = parametres.vitesse.toFixed(1) + 'x';
+    localStorage.setItem('lecteurTexteParams', JSON.stringify(parametres));
+    
+    if (enCoursDeLecture) {
+      const texte = window.getSelection().toString().trim();
+      if (texte.length > 0) {
+        window.speechSynthesis.cancel();
+        setTimeout(() => lireTexte(texte), 100);
+      }
+    }
+  });
+  
+  // Test lecture
+  document.getElementById('test-lecture').addEventListener('click', () => {
+    lireTexte('Bonjour ! Ceci est un test de la lecture vocale.');
+  });
+  
+  // Arrêter lecture
+  document.getElementById('arreter-lecture').addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    enCoursDeLecture = false;
+    afficherNotification('⏹️ Lecture arrêtée', '#f44336');
+  });
+}
+
+// Ajouter le style CSS
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }
+`;
+document.head.appendChild(style);
+
+// Démarrer l'extension
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initExtension);
+} else {
+  initExtension();
+}
+
+
+
