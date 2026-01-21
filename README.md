@@ -7,10 +7,10 @@ FONCTIONNALITÉ :
 
 INSTALLATION :
 1. Téléchargez les fichiers manifest.json et content.js
-2. INstaller ceci dans un dossier LecteurVocal
+2. Installer ceux-ci dans un dossier LecteurVocal
 3. Ouvrez Chrome et allez à : chrome://extensions/
 4. Activez le "Mode développeur" (en haut à droite)
-5. Cliquez sur "Charger l'extension non empaquetée" (en haut , à gauche)
+5. Cliquez sur "Charger l'extension non empaquetée" (en haut, à gauche)
 6. Sélectionnez le dossier LecteurVocal contenant les 2 fichiers
 
 OPTIONS :
@@ -21,7 +21,7 @@ OPTIONS :
 
 ASTUCES :
 - Compatible avec certains PDF (pas tous...)
-- Marche sur tous les sites web
+- Fonctionne sur tous les sites web
 - Pour arrêter : appuyez à nouveau sur Alt+x (simultanément)
 
 SUPPORT :
