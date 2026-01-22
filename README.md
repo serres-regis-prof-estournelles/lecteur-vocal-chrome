@@ -1,4 +1,4 @@
-✅ LECTEUR VOCAL - Extension Chrome GRATUITE très facile à installer et à utiliser
+✅ LECTEUR VOCAL - Extension Chrome GRATUITE très facile à installer (moins de 5 minutes) + Très facile à utiliser
 
 ✅ FONCTIONNALITÉ :
 1. Sélectionnez du texte dans Chrome (Le mettre en surbrillance)
@@ -12,6 +12,7 @@
 4. Activez le "Mode développeur" (en haut à droite)
 5. Cliquez sur "Charger l'extension non empaquetée" (en haut, à gauche)
 6. Sélectionnez le dossier LecteurVocal contenant les 2 fichiers
+7. C'est fini : l'extension sur Google Chrome est fonctionnelle. Cette dernière apparaît dans la liste des extensions
 
 ✅ OPTIONS :
 - Cliquez sur l'icône 🎙️ en bas à droite pour :
@@ -28,7 +29,7 @@
 Problèmes ? Relisez bien les étapes d'installation.
 Assurez-vous d'avoir une voix française installée sur votre ordinateur.
 
-✅ DÉCHARGE DE RESPONSABILITÉ
+✅ DÉCHARGE DE RESPONSABILITÉ (Peu de risques en réalité)
 
 1. UTILISATION À VOS RISQUES
 Cette extension Chrome est fournie "EN L'ÉTAT", sans aucune garantie, expresse ou implicite. En aucun cas le concepteur ne pourra être tenu responsable des dommages directs, indirects, accessoires, spéciaux ou consécutifs résultant de l'utilisation ou de l'impossibilité d'utiliser cette extension.
