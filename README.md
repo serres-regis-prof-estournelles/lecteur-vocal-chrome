@@ -52,4 +52,6 @@ Le concepteur se réserve le droit de modifier, suspendre ou interrompre l'exten
 6. ACCEPTATION
 En installant et utilisant cette extension, vous acceptez les termes de cette décharge de responsabilité dans leur intégralité.
 
-Dernière mise à jour : 21/01/2026
+📄 Licence Ce projet est sous licence libre. Vous pouvez l'utiliser, le modifier et le distribuer librement dans un cadre éducatif.
+
+👤 Auteur SERRES Régis Enseignant - Lycée Estournelles de Constant, La Flèche (72) GitHub : @serres-regis-prof-estournelles
