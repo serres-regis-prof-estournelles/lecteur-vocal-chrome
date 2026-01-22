@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Lecteur Vocal",
   "version": "1.0",
-  "description": "Lit le texte sélectionné à voix haute - Compatible PDF",
+  "description": "Lit le texte sélectionné à voix haute - Compatible PDF dans certains cas",
   "permissions": [
     "activeTab",
     "storage"
