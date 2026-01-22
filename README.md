@@ -15,9 +15,9 @@ INSTALLATION :
 
 OPTIONS :
 - Cliquez sur l'icône 🎙️ en bas à droite pour :
-  * Régler la vitesse de lecture
-  * Tester la voix
-  * Arrêter la lecture
+  * Régler la vitesse de lecture ;
+  * Tester la voix ;
+  * Arrêter la lecture.
 
 ASTUCES :
 - Compatible avec certains PDF (pas tous...)
