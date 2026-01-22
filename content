@@ -4,7 +4,7 @@ let parametres = {
   voixFeminine: true
 };
 
-// État de la lecture
+// État de la lecture du document
 let enCoursDeLecture = false;
 let panneauCree = false;
 
