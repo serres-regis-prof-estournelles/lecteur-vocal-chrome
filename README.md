@@ -1,4 +1,4 @@
-✅ LECTEUR VOCAL - Extension Chrome GRATUITE très facile à installer 
+✅ LECTEUR VOCAL - Extension Chrome GRATUITE très facile à installer et à utiliser
 
 ✅ FONCTIONNALITÉ :
 1. Sélectionnez du texte dans Chrome (Le mettre en surbrillance)
