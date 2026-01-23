@@ -21,7 +21,6 @@
   * Arrêter la lecture.
 
 ✅ ASTUCES :
-- Compatible avec certains PDF (pas tous...)
 - Fonctionne sur tous les sites web
 - Pour arrêter : appuyez à nouveau sur Alt+x (simultanément)
 
