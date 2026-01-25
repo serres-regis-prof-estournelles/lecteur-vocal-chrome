@@ -1,18 +1,20 @@
-# LECTEUR VOCAL - Extension Chrome GRATUITE très facile à installer (moins de 5 minutes) + Très facile à utiliser
+# LECTEUR VOCAL - Extension GRATUITE très facile à installer (moins de 5 minutes)
+# 
+# Utilsable avec Google Chrome, Safari, Microsoft Edge, Mozilla Firefox, Opera, Comet, etc...
 
 ✅ FONCTIONNALITÉ :
-1. Sélectionnez du texte dans Chrome (Le mettre en surbrillance)
+1. Sélectionnez du texte dans votre navigateur (Le mettre en surbrillance)
 2. Appuyez sur Alt + x (simultanément)
 3. Le texte est lu à voix haute
 
 ✅ INSTALLATION :
 1. Téléchargez les fichiers manifest.json et content.js
 2. Installez ceux-ci dans un dossier LecteurVocal
-3. Ouvrez Chrome et allez à : chrome://extensions/
-4. Activez le "Mode développeur" (en haut à droite)
-5. Cliquez sur "Charger l'extension non empaquetée" (en haut, à gauche)
+3. Accéder à l'onglet des extensions
+4. Activez le "Mode développeur"
+5. Cliquez sur "Charger l'extension non empaquetée"
 6. Sélectionnez le dossier LecteurVocal contenant les 2 fichiers
-7. C'est fini : l'extension sur Google Chrome est fonctionnelle. Cette dernière apparaît dans la liste des extensions
+7. C'est fini : l'extension est fonctionnelle. Cette dernière apparaît dans la liste des extensions
 
 ✅ OPTIONS :
 - Cliquez sur l'icône 🎙️ en bas à droite pour :
