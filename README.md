@@ -51,8 +51,8 @@
 #
 2. SÉCURITÉ
 #
-Bien que cette extension ne collecte aucune donnée personnelle et fonctionne localement, l'utilisateur assume tous les risques liés à la sécurité de son système.
+**Bien que cette extension ne collecte aucune donnée personnelle et fonctionne localement, l'utilisateur assume tous les risques liés à la sécurité de son système.**
 #
 📄 Licence : **Ce projet est sous licence libre**. Vous pouvez l'utiliser, le modifier et le distribuer librement dans un cadre éducatif.
 #
-👤 Auteur SERRES Régis Enseignant - Lycée Estournelles de Constant, La Flèche (72) - GitHub : @serres-regis-prof-estournelles
+👤 Auteur : SERRES Régis - Enseignant - Lycée Estournelles de Constant, La Flèche (72) - GitHub : @serres-regis-prof-estournelles
